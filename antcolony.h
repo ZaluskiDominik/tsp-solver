@@ -55,11 +55,11 @@ private:
 	//move all ants to next vertex
 	void moveAnts();
 
-	//moves ant to given vertex if probability of that move is greater than some random probability
-	void moveAntBasedOnProbability(Ant& ant, int toVertex, double moveProbability);
-
 	//calculates numerator of ant's probability to move to given vertex
 	double calcEdgeAttractivness(int fromIndex, int toIndex);
+
+	//returns sum of edge attractivess to ant moving from currentIndex to all possible unvisited nodes
+	double calcSumOfEdgeAttractivness(const Ant& ant);
 
 	//updates number of pheromones on each edge
 	void updatePheromones();

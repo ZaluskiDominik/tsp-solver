@@ -12,6 +12,7 @@ AntColony::AntColony(const std::vector<std::vector<double>>& graph, const AntCol
 	spawnAnts();
 }
 
+#define OUT_EACH_DIST
 void AntColony::startAlgorithm()
 {
 	double startTime, endTime;
@@ -32,9 +33,21 @@ void AntColony::startAlgorithm()
 
 		//update pheromones on edges
 		updatePheromones();
+
+		/*for (auto v : graph)
+		{
+			for (auto v2 : v)
+				std::cout << int(v2.pheromones) << " ";
+			std::cout << "\n";
+		}*/
 				
 		//check if better path than currently the best path was found by any ant
 		updateBestPath();
+
+		//output used by ant colony plotter
+		#ifdef OUT_EACH_DIST
+			std::cout << traveledDistance << "\n";
+		#endif
 
 		endTime = clock();
 	}
@@ -82,11 +95,8 @@ void AntColony::moveAnts()
 {
 	for (auto& ant : ants)
 	{
-		double attractivness, sumOfAttractivness = 0;
-		int bestVertex = -1;
-		double maxAttractivness = -1;
+		double attractivness, sumOfAttractivness = calcSumOfEdgeAttractivness(ant), sumOfProb = 0;
 
-		//find maximal probability of transition from startVertex to some other vertex
 		for (unsigned i = 0 ; i < graph.size() ; i++)
 		{
 			//if vertex i wasn't visited by ant
@@ -94,55 +104,24 @@ void AntColony::moveAnts()
 			{
 				//calculate attractivness of trasition from ant's current vertex to vertex i
 				attractivness = calcEdgeAttractivness(ant.currVertex, i);
-				//add that attractivness to sum of attractivness of move to all unvisited vertexes 
-				sumOfAttractivness += attractivness;
 				
-				//if attractivness of move to vertex i is greater than currently max found attractivness
-				if (attractivness > maxAttractivness)
+				//calc move probability to vertex i
+				double moveProbability = attractivness / sumOfAttractivness;
+				
+				sumOfProb += moveProbability;
+				
+				//some random probability(prevents ant from constantly choosing edges with max probability)
+				double randomNumber = static_cast<double>(std::rand() % 1000) / 1000.0;
+
+				//if sum of move probabilities is greater or equal to random number then go to vertex i
+				//else continue checking other possible vertexes
+				if ( sumOfProb >= randomNumber )
 				{
-					//new max attractivness is found
-					maxAttractivness = attractivness;
-					bestVertex = i;
+					ant.move(i, graph[ant.currVertex][i].distance);
+					break;
 				}
 			}
 		}
-
-		//calc move probability to bestVertex using maxAttractivness
-		double moveProbability = (sumOfAttractivness) ? attractivness / sumOfAttractivness : 0;
-
-		//make a move with this ant
-		moveAntBasedOnProbability(ant, bestVertex, moveProbability);
-	}
-}
-
-void AntColony::moveAntBasedOnProbability(Ant& ant, int toVertex, double moveProbability)
-{
-	//some random probability(prevents ant from being stack in loop if there is too much pheromones on edge)
-	double randomNumber = static_cast<double>(std::rand() % 1000) / 1000.0;
-
-	if (moveProbability > randomNumber)
-	{
-		//go to vertex where probability of optimal move is maximal
-		ant.move(toVertex, graph[ant.currVertex][toVertex].distance);
-	}
-	else
-	{
-		//random factor wins
-		//go to the nearest vertex
-		double minDistance = INF;
-		int minVertex = -1;
-
-		//find that nearest vertex
-		for (int i = 0 ; i < graph.size() ; i++)
-		{
-			if ( !ant.visited[i] && graph[ant.currVertex][i].distance < minDistance )
-			{
-				minDistance = graph[ant.currVertex][i].distance;
-				minVertex = i;
-			}
-		}
-
-		ant.move(minVertex, graph[ant.currVertex][minVertex].distance);
 	}
 }
 
@@ -150,6 +129,21 @@ double AntColony::calcEdgeAttractivness(int fromIndex, int toIndex)
 {
 	const Edge& edge = graph[fromIndex][toIndex];
 	return pow(edge.pheromones, params.alpha) * pow(1/edge.distance, params.betha);
+}
+
+double AntColony::calcSumOfEdgeAttractivness(const Ant& ant)
+{
+	double sum = 0;
+
+	//sum edges attractivness from ant's startIndex to all unvisited nodes
+	for (int i = 0 ; i < graph.size() ; i++)
+	{
+		//if node i wasn't already visited
+		if ( !ant.visited[i] )
+			sum += calcEdgeAttractivness(ant.currVertex, i);
+	}
+
+	return sum;
 }
 
 void AntColony::updatePheromones()
