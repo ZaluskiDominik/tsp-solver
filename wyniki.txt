@@ -1,0 +1,2 @@
+distance numAnts alpha betha evaporationRate
+71861 20 3 2 0.4

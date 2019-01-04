@@ -12,7 +12,6 @@ AntColony::AntColony(const std::vector<std::vector<double>>& graph, const AntCol
 	spawnAnts();
 }
 
-#define OUT_EACH_DIST
 void AntColony::startAlgorithm()
 {
 	double startTime, endTime;
@@ -33,21 +32,9 @@ void AntColony::startAlgorithm()
 
 		//update pheromones on edges
 		updatePheromones();
-
-		/*for (auto v : graph)
-		{
-			for (auto v2 : v)
-				std::cout << int(v2.pheromones) << " ";
-			std::cout << "\n";
-		}*/
 				
 		//check if better path than currently the best path was found by any ant
 		updateBestPath();
-
-		//output used by ant colony plotter
-		#ifdef OUT_EACH_DIST
-			std::cout << traveledDistance << "\n";
-		#endif
 
 		endTime = clock();
 	}
