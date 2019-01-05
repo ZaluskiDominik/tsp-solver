@@ -24,15 +24,47 @@ void TunerDialog::initParamRanges()
     };
 }
 
+void TunerDialog::disableChoosingBtns(bool yes)
+{
+    ui.chooseInstBtn->setDisabled(yes);
+    ui.chooseOutFileBtn->setDefault(yes);
+}
+
 void TunerDialog::computeAllParamsSets()
 {
+    int numExecutedRuns = 0;
+
+    //run all possible parameters set in tsp solver
     do
     {
-        runInstance();
+        for (int i = 0 ; i < numParamsSetRuns ; i++)
+        {
+            runInstance();
+            numExecutedRuns++;
+
+            //update progress after each run
+            updateProgressBar(numExecutedRuns);
+        }
     }
     while(nextParamsSet());
 
+    //all possible params sets were generated, store result in file
     allParamsExecuted();
+}
+
+int TunerDialog::calcNumPossibleSets()
+{
+    int num = 1;
+
+    //number of possible params sets = multiplication of number of possible values beetwen
+    //min value and max value of each parameter in vector
+    for (const auto& param : params)
+    {
+        num *= (param.maxVal > param.minVal) ?
+                (param.maxVal - param.minVal) / param.step + 1 : 1;
+    }
+
+    return num;
 }
 
 bool TunerDialog::nextParamsSet()
@@ -87,6 +119,7 @@ void TunerDialog::allParamsExecuted()
 {
     //enable start button
     ui.startBtn->setEnabled(true);
+    disableChoosingBtns(false);
     //stop counting time
     emit stopTimer();
 
@@ -110,15 +143,33 @@ void TunerDialog::allParamsExecuted()
     }
 }
 
+void TunerDialog::updateProgressBar(int numRunsExecuted)
+{
+    ui.progressBar->setValue(static_cast<int>(
+        static_cast<double>(numRunsExecuted) / static_cast<double>(numTotalRuns) * 100 ));
+}
+
 void TunerDialog::on_startBtn_clicked()
 {
     //if instace file ot output file weren't choosen do nothing
     if (ui.instanceFile->text() == "" || ui.outFile->text() == "")
         return;
 
-    //disable start button and initialize first parameters set
+    //clear vector with results
+    results.clear();
+    //reset total time elapsed from start
+    ui.totalTime->setText("0");
+    ui.progressBar->setValue(0);
+
+    //disable start button and initialize parameters set structures
     ui.startBtn->setDisabled(true);
+    disableChoosingBtns();
     initParamRanges();
+
+    numTotalRuns = calcNumPossibleSets() * ui.numRuns->value();
+
+    //how many times each parameters set will be run
+    numParamsSetRuns = ui.numRuns->text().toInt();
 
     //run function in new thread running program implementing ant colony with different parameters
     std::thread t(&TunerDialog::computeAllParamsSets, this);

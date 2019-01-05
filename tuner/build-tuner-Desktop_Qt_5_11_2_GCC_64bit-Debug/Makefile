@@ -224,6 +224,7 @@ DIST          = ../../../../Qt/5.11.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.11.2/gcc_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.11.2/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../../Qt/5.11.2/gcc_64/mkspecs/features/spec_post.prf \
+		../tuner/.qmake.stash \
 		../../../../Qt/5.11.2/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.11.2/gcc_64/mkspecs/features/toolchain.prf \
 		../../../../Qt/5.11.2/gcc_64/mkspecs/features/default_pre.prf \
@@ -425,6 +426,7 @@ Makefile: ../tuner/tuner.pro ../../../../Qt/5.11.2/gcc_64/mkspecs/linux-g++/qmak
 		../../../../Qt/5.11.2/gcc_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.11.2/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../../Qt/5.11.2/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/5.11.2/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.11.2/gcc_64/mkspecs/features/toolchain.prf \
 		../../../../Qt/5.11.2/gcc_64/mkspecs/features/default_pre.prf \
@@ -618,6 +620,7 @@ Makefile: ../tuner/tuner.pro ../../../../Qt/5.11.2/gcc_64/mkspecs/linux-g++/qmak
 ../../../../Qt/5.11.2/gcc_64/mkspecs/features/qt_config.prf:
 ../../../../Qt/5.11.2/gcc_64/mkspecs/linux-g++/qmake.conf:
 ../../../../Qt/5.11.2/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Qt/5.11.2/gcc_64/mkspecs/features/exclusive_builds.prf:
 ../../../../Qt/5.11.2/gcc_64/mkspecs/features/toolchain.prf:
 ../../../../Qt/5.11.2/gcc_64/mkspecs/features/default_pre.prf:
@@ -798,6 +801,49 @@ moc_tunerdialog.cpp: ../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QDialog \
 		../../../../Qt/5.11.2/gcc_64/include/QtGui/qvector2d.h \
 		../../../../Qt/5.11.2/gcc_64/include/QtGui/qtouchdevice.h \
 		ui_tunerdialog.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/QVariant \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QApplication \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qapplication.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qeventloop.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qguiapplication.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qinputmethod.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QDoubleSpinBox \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qspinbox.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qvalidator.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qregularexpression.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QGridLayout \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qlayout.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QGroupBox \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qgroupbox.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qframe.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QHBoxLayout \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QLabel \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qlabel.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QLineEdit \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qlineedit.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qtextcursor.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qtextformat.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qpen.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qtextoption.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QProgressBar \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qprogressbar.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qpushbutton.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qicon.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QSpacerItem \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QSpinBox \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QVBoxLayout \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/QVector \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/QTimer \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qtimer.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qbasictimer.h \
 		../tuner/tunerdialog.h \
 		moc_predefs.h \
 		../../../../Qt/5.11.2/gcc_64/bin/moc
@@ -930,13 +976,49 @@ main.o: ../tuner/main.cpp ../tuner/tunerdialog.h \
 		../../../../Qt/5.11.2/gcc_64/include/QtGui/qvector2d.h \
 		../../../../Qt/5.11.2/gcc_64/include/QtGui/qtouchdevice.h \
 		ui_tunerdialog.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/QVariant \
 		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QApplication \
 		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.11.2/gcc_64/include/QtCore/qcoreapplication.h \
 		../../../../Qt/5.11.2/gcc_64/include/QtCore/qeventloop.h \
 		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		../../../../Qt/5.11.2/gcc_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.11.2/gcc_64/include/QtGui/qinputmethod.h
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qinputmethod.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QDoubleSpinBox \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qspinbox.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qvalidator.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qregularexpression.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QGridLayout \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qlayout.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QGroupBox \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qgroupbox.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qframe.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QHBoxLayout \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QLabel \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qlabel.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QLineEdit \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qlineedit.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qtextcursor.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qtextformat.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qpen.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qtextoption.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QProgressBar \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qprogressbar.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qpushbutton.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qicon.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QSpacerItem \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QSpinBox \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QVBoxLayout \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/QVector \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/QTimer \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qtimer.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qbasictimer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../tuner/main.cpp
 
 tunerdialog.o: ../tuner/tunerdialog.cpp ../tuner/tunerdialog.h \
@@ -1044,7 +1126,54 @@ tunerdialog.o: ../tuner/tunerdialog.cpp ../tuner/tunerdialog.h \
 		../../../../Qt/5.11.2/gcc_64/include/QtCore/qfiledevice.h \
 		../../../../Qt/5.11.2/gcc_64/include/QtGui/qvector2d.h \
 		../../../../Qt/5.11.2/gcc_64/include/QtGui/qtouchdevice.h \
-		ui_tunerdialog.h
+		ui_tunerdialog.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/QVariant \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QApplication \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qapplication.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qeventloop.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qguiapplication.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qinputmethod.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QDoubleSpinBox \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qspinbox.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qvalidator.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qregularexpression.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QGridLayout \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qlayout.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QGroupBox \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qgroupbox.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qframe.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QHBoxLayout \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QLabel \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qlabel.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QLineEdit \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qlineedit.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qtextcursor.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qtextformat.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qpen.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qtextoption.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QProgressBar \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qprogressbar.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QPushButton \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qpushbutton.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtGui/qicon.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QSpacerItem \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QSpinBox \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QVBoxLayout \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/QVector \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/QTimer \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qtimer.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qbasictimer.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/QFileDialog \
+		../../../../Qt/5.11.2/gcc_64/include/QtWidgets/qfiledialog.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qdir.h \
+		../../../../Qt/5.11.2/gcc_64/include/QtCore/qfileinfo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tunerdialog.o ../tuner/tunerdialog.cpp
 
 moc_tunerdialog.o: moc_tunerdialog.cpp 

@@ -19,6 +19,13 @@ private:
 
     Ui::TunerDialog ui;
 
+    //number of time each parameters set will be run
+    int numParamsSetRuns;
+
+    //total number of runs of tsp solver program
+    //it's a (number of possible parameters sets) * (number of runs for each set)
+    int numTotalRuns;
+
     //timer counting time elapsed from start of running ant colony tsp solver with different parameters
     QTimer timer;
 
@@ -31,8 +38,14 @@ private:
     //append parameters to params array
     void initParamRanges();
 
+    //disables buttons for choosing output file and instance
+    void disableChoosingBtns(bool yes = true);
+
     //generates all possible parameters sets for solving tsp instance with ant colony algorithm
     void computeAllParamsSets();
+
+    //calculates number of possible parameters sets that can be generated from params vector
+    int calcNumPossibleSets();
 
     //computes next parameters set
     //returns false if all parameters sets were generated
@@ -46,6 +59,9 @@ private:
 
     //tsp solver was ran with all generated parameters sets
     void allParamsExecuted();
+
+    //updates progress of progress bar according to ratio numRunsExecuted / numTotalRuns
+    void updateProgressBar(int numRunsExecuted);
 
 private slots:
     //start button clicked
