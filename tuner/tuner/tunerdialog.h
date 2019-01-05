@@ -23,7 +23,7 @@ private:
 
     Ui::TunerDialog ui;
 
-    //means of synchronizing access to progress bar and results vector
+    //means of synchronizing access to results vector
     std::mutex mutex;
 
     //total number of runs of tsp solver program
@@ -73,9 +73,6 @@ private:
     //tsp solver was ran with all generated parameters sets
     void allParamsExecuted();
 
-    //updates progress of progress bar according to ratio numAlreadyRun / numTotalRuns
-    void updateProgressBar();
-
 private slots:
     //start button clicked
     void on_startBtn_clicked();
@@ -92,8 +89,13 @@ private slots:
     //stop of timer has been requested from another thread
     void onStopTimer();
 
+    //update of value of progress bar was requested from another thread
+    //updates progress of progress bar according to ratio numAlreadyRun / numTotalRuns
+    void onUpdateProgressBar();
+
 signals:
     void stopTimer();
+    void updateProgressBar();
 };
 
 //structure representing range of values that a parameter can take

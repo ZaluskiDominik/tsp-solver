@@ -3,6 +3,7 @@
 #include <thread>
 #include <cstdlib>
 #include <fstream>
+#include <cmath>
 
 TunerDialog::TunerDialog(QWidget *parent)
     :QDialog(parent)
@@ -10,6 +11,7 @@ TunerDialog::TunerDialog(QWidget *parent)
     ui.setupUi(this);
     QObject::connect(&timer, SIGNAL(timeout()), this, SLOT(onTimeUpdate()));
     QObject::connect(this, SIGNAL(stopTimer()), this, SLOT(onStopTimer()));
+    QObject::connect(this, SIGNAL(updateProgressBar()), this, SLOT(onUpdateProgressBar()));
 }
 
 void TunerDialog::initParamRanges()
@@ -27,7 +29,7 @@ void TunerDialog::initParamRanges()
 void TunerDialog::disableGeneralOptions(bool yes)
 {
     ui.chooseInstBtn->setDisabled(yes);
-    ui.chooseOutFileBtn->setDefault(yes);
+    ui.chooseOutFileBtn->setDisabled(yes);
     ui.numRuns->setDisabled(yes);
     ui.numThreads->setDisabled(yes);
     ui.timeLimit->setDisabled(yes);
@@ -43,7 +45,7 @@ void TunerDialog::computeAllParamsSets()
             //wait until some slot on thread will be available
             while ( !numThreads );
 
-            //decrement number of available thread
+            //decrement number of available threads
             numThreads--;
 
             //run new thread with currently generated params set
@@ -55,7 +57,7 @@ void TunerDialog::computeAllParamsSets()
     while(nextParamsSet());
 
     //wait for all threads done executing tsp solver process
-    while(numThreads != ui.numRuns->value());
+    while(numThreads != ui.numThreads->value());
 
     //all possible params sets were generated, store result in file
     allParamsExecuted();
@@ -70,7 +72,7 @@ int TunerDialog::calcNumPossibleSets()
     for (const auto& param : params)
     {
         num *= (param.maxVal > param.minVal) ?
-                    static_cast<int>( (param.maxVal - param.minVal) / param.step ) + 1 : 1;
+                    std::round( (param.maxVal - param.minVal) / param.step ) + 1 : 1;
     }
 
     return num;
@@ -120,22 +122,22 @@ void TunerDialog::runInstance(ParamsSet set)
 
 void TunerDialog::paramsSetResultAvailable(int distance)
 {
-    //lock resources
-    std::lock_guard<std::mutex> lock(mutex);
-
     //increment number of already run tsp solver processes
     numAlreadyRun++;
 
     //update progress bar
-    updateProgressBar();
+    emit updateProgressBar();
+
+    //lock resources
+    std::lock_guard<std::mutex> lock(mutex);
 
     //add new result to vector
     results.push_back( ParamsSetResult{
         { static_cast<int>(params[0].val), params[1].val, params[2].val, params[3].val },
-             distance
+            distance
     });
 
-    //increment number of available thread
+    //increment number of available threads
     numThreads++;
 }
 
@@ -165,12 +167,6 @@ void TunerDialog::allParamsExecuted()
                     " " << result.set.betha << " " << result.set.evaporationRate << "\n";
         }
     }
-}
-
-void TunerDialog::updateProgressBar()
-{
-    ui.progressBar->setValue(static_cast<int>(
-        static_cast<double>(numAlreadyRun) / static_cast<double>(numTotalRuns) * 100 ));
 }
 
 void TunerDialog::on_startBtn_clicked()
@@ -221,6 +217,12 @@ void TunerDialog::onTimeUpdate()
 void TunerDialog::onStopTimer()
 {
     timer.stop();
+}
+
+void TunerDialog::onUpdateProgressBar()
+{
+    ui.progressBar->setValue(static_cast<int>(
+        static_cast<double>(numAlreadyRun) / static_cast<double>(numTotalRuns) * 100 ));
 }
 
 void TunerDialog::on_chooseOutFileBtn_clicked()
