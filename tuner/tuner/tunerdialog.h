@@ -5,6 +5,8 @@
 #include "ui_tunerdialog.h"
 #include <QVector>
 #include <QTimer>
+#include <atomic>
+#include <mutex>
 
 class TunerDialog : public QDialog
 {
@@ -14,17 +16,27 @@ public:
     explicit TunerDialog(QWidget *parent = nullptr);
 
 private:
+    //definitions of those structures are below TunerDialog class definition
     struct ParamRange;
+    struct ParamsSet;
     struct ParamsSetResult;
 
     Ui::TunerDialog ui;
 
-    //number of time each parameters set will be run
-    int numParamsSetRuns;
+    //means of synchronizing access to progress bar and results vector
+    std::mutex mutex;
 
     //total number of runs of tsp solver program
     //it's a (number of possible parameters sets) * (number of runs for each set)
     int numTotalRuns;
+
+    //number of times tsp solver was executed
+    //it's modified by many threads, thus atomic is needed
+    std::atomic<int> numAlreadyRun;
+
+    //number of threads that are running processes of tsp solver
+    //it's modified by many threads, thus atomic is needed
+    std::atomic<int> numThreads;
 
     //timer counting time elapsed from start of running ant colony tsp solver with different parameters
     QTimer timer;
@@ -38,8 +50,9 @@ private:
     //append parameters to params array
     void initParamRanges();
 
-    //disables buttons for choosing output file and instance
-    void disableChoosingBtns(bool yes = true);
+    //disables/enables all gui components in general options group box
+    //disabled when yes var is true
+    void disableGeneralOptions(bool yes = true);
 
     //generates all possible parameters sets for solving tsp instance with ant colony algorithm
     void computeAllParamsSets();
@@ -52,7 +65,7 @@ private:
     bool nextParamsSet();
 
     //runs ant colony algorithm with given parameters set
-    void runInstance();
+    void runInstance(ParamsSet set);
 
     //result of ran ant colony algorithm with given params is available
     void paramsSetResultAvailable(int distance);
@@ -60,8 +73,8 @@ private:
     //tsp solver was ran with all generated parameters sets
     void allParamsExecuted();
 
-    //updates progress of progress bar according to ratio numRunsExecuted / numTotalRuns
-    void updateProgressBar(int numRunsExecuted);
+    //updates progress of progress bar according to ratio numAlreadyRun / numTotalRuns
+    void updateProgressBar();
 
 private slots:
     //start button clicked
@@ -83,30 +96,36 @@ signals:
     void stopTimer();
 };
 
+//structure representing range of values that a parameter can take
 struct TunerDialog::ParamRange
 {
     ParamRange() = default;
-    ParamRange(QString name, double minVal, double maxVal, double step)
+    ParamRange(double minVal, double maxVal, double step)
     {
-        this->name = name;
         this->minVal = minVal;
         this->maxVal = maxVal;
         this->step = step;
         this->val = minVal;
     }
 
-    QString name;
     double minVal, maxVal;
     double step;
     double val;
 };
 
-struct TunerDialog::ParamsSetResult
+//structure representing set of parameters for ant colony cmd args
+struct TunerDialog::ParamsSet
 {
     int numAnts;
     double alpha;
     double betha;
     double evaporationRate;
+};
+
+//structure representing result of executing tsp solver ant colony
+struct TunerDialog::ParamsSetResult
+{
+    ParamsSet set;
     int distance;
 };
 

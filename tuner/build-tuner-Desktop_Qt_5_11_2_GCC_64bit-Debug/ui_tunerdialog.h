@@ -58,6 +58,8 @@ public:
     QLineEdit *outFile;
     QPushButton *chooseOutFileBtn;
     QLabel *label_11;
+    QLabel *label_17;
+    QSpinBox *numThreads;
     QGroupBox *groupBox3;
     QGridLayout *gridLayout_3;
     QLabel *label_6;
@@ -78,7 +80,7 @@ public:
     QLabel *label_12;
     QProgressBar *progressBar;
     QLabel *label_10;
-    QLabel *totalTime;
+    QLabel *elapsedTime;
     QSpacerItem *horizontalSpacer;
     QPushButton *startBtn;
 
@@ -87,6 +89,7 @@ public:
         if (TunerDialog->objectName().isEmpty())
             TunerDialog->setObjectName(QStringLiteral("TunerDialog"));
         TunerDialog->resize(1209, 798);
+        TunerDialog->setMinimumSize(QSize(1000, 750));
         verticalLayout = new QVBoxLayout(TunerDialog);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -345,6 +348,26 @@ public:
 
         gridLayout_4->addWidget(label_11, 3, 0, 1, 1);
 
+        label_17 = new QLabel(groupBox2);
+        label_17->setObjectName(QStringLiteral("label_17"));
+        sizePolicy3.setHeightForWidth(label_17->sizePolicy().hasHeightForWidth());
+        label_17->setSizePolicy(sizePolicy3);
+        label_17->setMinimumSize(QSize(290, 40));
+        label_17->setStyleSheet(QStringLiteral("font-size: 16px;"));
+
+        gridLayout_4->addWidget(label_17, 5, 0, 1, 1);
+
+        numThreads = new QSpinBox(groupBox2);
+        numThreads->setObjectName(QStringLiteral("numThreads"));
+        sizePolicy1.setHeightForWidth(numThreads->sizePolicy().hasHeightForWidth());
+        numThreads->setSizePolicy(sizePolicy1);
+        numThreads->setMinimumSize(QSize(100, 40));
+        numThreads->setFont(font1);
+        numThreads->setMinimum(1);
+        numThreads->setMaximum(10);
+
+        gridLayout_4->addWidget(numThreads, 5, 1, 1, 1);
+
 
         gridLayout_6->addWidget(groupBox2, 0, 0, 1, 1);
 
@@ -517,20 +540,21 @@ public:
         label_10->setObjectName(QStringLiteral("label_10"));
         sizePolicy3.setHeightForWidth(label_10->sizePolicy().hasHeightForWidth());
         label_10->setSizePolicy(sizePolicy3);
-        label_10->setStyleSheet(QStringLiteral("font-size: 17px;"));
+        label_10->setStyleSheet(QStringLiteral("font-size: 19px;"));
 
         horizontalLayout->addWidget(label_10);
 
-        totalTime = new QLabel(TunerDialog);
-        totalTime->setObjectName(QStringLiteral("totalTime"));
-        sizePolicy3.setHeightForWidth(totalTime->sizePolicy().hasHeightForWidth());
-        totalTime->setSizePolicy(sizePolicy3);
-        totalTime->setStyleSheet(QLatin1String("font-size: 17px;\n"
+        elapsedTime = new QLabel(TunerDialog);
+        elapsedTime->setObjectName(QStringLiteral("elapsedTime"));
+        sizePolicy3.setHeightForWidth(elapsedTime->sizePolicy().hasHeightForWidth());
+        elapsedTime->setSizePolicy(sizePolicy3);
+        elapsedTime->setMinimumSize(QSize(100, 0));
+        elapsedTime->setStyleSheet(QLatin1String("font-size: 19px;\n"
 "font-weight: bold;"));
 
-        horizontalLayout->addWidget(totalTime);
+        horizontalLayout->addWidget(elapsedTime);
 
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
+        horizontalSpacer = new QSpacerItem(140, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
 
@@ -568,6 +592,7 @@ public:
         chooseInstBtn->setText(QApplication::translate("TunerDialog", "Choose instance", nullptr));
         chooseOutFileBtn->setText(QApplication::translate("TunerDialog", "Choose output file", nullptr));
         label_11->setText(QApplication::translate("TunerDialog", "Number of runs of one parameters set:", nullptr));
+        label_17->setText(QApplication::translate("TunerDialog", "Number of threads:", nullptr));
         groupBox3->setTitle(QApplication::translate("TunerDialog", "Betha", nullptr));
         label_6->setText(QApplication::translate("TunerDialog", "Maximal value:", nullptr));
         label_7->setText(QApplication::translate("TunerDialog", "Minimal value:", nullptr));
@@ -577,8 +602,8 @@ public:
         label_14->setText(QApplication::translate("TunerDialog", "Maximal value[%]:", nullptr));
         label_15->setText(QApplication::translate("TunerDialog", "Minimal value[%]:", nullptr));
         label_12->setText(QApplication::translate("TunerDialog", "Progress:", nullptr));
-        label_10->setText(QApplication::translate("TunerDialog", "Total time[s]:", nullptr));
-        totalTime->setText(QApplication::translate("TunerDialog", "0", nullptr));
+        label_10->setText(QApplication::translate("TunerDialog", "Elapsed time[s]:", nullptr));
+        elapsedTime->setText(QApplication::translate("TunerDialog", "0", nullptr));
         startBtn->setText(QApplication::translate("TunerDialog", "Start", nullptr));
     } // retranslateUi
 
