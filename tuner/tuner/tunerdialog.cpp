@@ -99,7 +99,7 @@ bool TunerDialog::nextParamsSet()
 void TunerDialog::runInstance(ParamsSet set)
 {
     //prepare shell command to run
-    QString cmd = "../../tsp ant " + ui.instanceFile->text() + " out=dist time=" +
+    QString cmd = "../../tsp ant " + ui.instanceFile->text() + " out=all time=" +
             QString::number(ui.timeLimit->value() * 1000);
     //concatenate parameters set
     cmd += " ants=" + QString::number(set.numAnts) + " alpha=" + QString::number(set.alpha)
@@ -109,18 +109,25 @@ void TunerDialog::runInstance(ParamsSet set)
     FILE* f = popen(cmd.toStdString().c_str(), "r");
 
     //wait for process to end execution
-    //get output of ran process from pipe
-    char result[30];
-    fgets(result, 30, f);
+
+    //get output of ran process in form of path and distance from pipe
+    //first get path
+    char path[10000];
+    fgets(path, 10000, f);
+    std::string pathStr(path);
+
+    //second get distance
+    char dist[30];
+    fgets(dist, 30, f);
 
     //close pipe
     pclose(f);
 
     //process new result of execution tsp solver
-    paramsSetResultAvailable(atoi(result));
+    paramsSetResultAvailable(atoi(dist + 10), pathStr);
 }
 
-void TunerDialog::paramsSetResultAvailable(int distance)
+void TunerDialog::paramsSetResultAvailable(int distance, std::string &path)
 {
     //increment number of already run tsp solver processes
     numAlreadyRun++;
@@ -134,7 +141,7 @@ void TunerDialog::paramsSetResultAvailable(int distance)
     //add new result to vector
     results.push_back( ParamsSetResult{
         { static_cast<int>(params[0].val), params[1].val, params[2].val, params[3].val },
-            distance
+            distance, path
     });
 
     //increment number of available threads
@@ -165,6 +172,7 @@ void TunerDialog::allParamsExecuted()
         {
             file << result.distance << " " << result.set.numAnts << " " << result.set.alpha <<
                     " " << result.set.betha << " " << result.set.evaporationRate << "\n";
+            file << result.path << "\n";
         }
     }
 }

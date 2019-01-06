@@ -68,7 +68,7 @@ private:
     void runInstance(ParamsSet set);
 
     //result of ran ant colony algorithm with given params is available
-    void paramsSetResultAvailable(int distance);
+    void paramsSetResultAvailable(int distance, std::string& path);
 
     //tsp solver was ran with all generated parameters sets
     void allParamsExecuted();
@@ -129,6 +129,7 @@ struct TunerDialog::ParamsSetResult
 {
     ParamsSet set;
     int distance;
+    std::string path;
 };
 
 #endif // TUNERDIALOG_H
